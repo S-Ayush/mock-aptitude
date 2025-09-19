@@ -33,8 +33,14 @@ export type Question = {
   option_c: string
   option_d: string
   correct_answer: string
+  section?: string
+  category?: string
+  difficulty?: string
+  explanation?: string
+  question_order?: number
   created_at: string
 }
+
 
 export type TestAttempt = {
   id: string

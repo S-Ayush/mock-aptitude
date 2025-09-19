@@ -1,0 +1,650 @@
+{
+    "test_info": {
+      "title": "Mock Placement Drive - Aptitude Round",
+      "duration_minutes": 60,
+      "total_questions": 40,
+      "marking_scheme": {
+        "correct_answer": 1,
+        "incorrect_answer": -0.25,
+        "unanswered": 0
+      },
+      "passing_criteria": "50% (20/40 questions)",
+      "sections": [
+        {
+          "section_name": "Logical Reasoning",
+          "question_range": "1-20"
+        },
+        {
+          "section_name": "Basic Programming Concepts",
+          "question_range": "21-40"
+        }
+      ]
+    },
+    "questions": [
+      {
+        "id": 1,
+        "section": "Logical Reasoning",
+        "category": "Number Series",
+        "difficulty": "Easy",
+        "question": "Find the next number in the series: 2, 6, 12, 20, 30, ?",
+        "options": [
+          { "a": "40" },
+          { "b": "42" },
+          { "c": "44" },
+          { "d": "46" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Pattern: +4, +6, +8, +10, +12"
+      },
+      {
+        "id": 2,
+        "section": "Logical Reasoning",
+        "category": "Number Series",
+        "difficulty": "Easy",
+        "question": "Complete the series: 1, 4, 9, 16, 25, ?",
+        "options": [
+          { "a": "36" },
+          { "b": "35" },
+          { "c": "34" },
+          { "d": "32" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Perfect squares: 1², 2², 3², 4², 5², 6²"
+      },
+      {
+        "id": 3,
+        "section": "Logical Reasoning",
+        "category": "Number Series",
+        "difficulty": "Medium",
+        "question": "Find the missing number: 3, 7, 15, 31, 63, ?",
+        "options": [
+          { "a": "125" },
+          { "b": "127" },
+          { "c": "129" },
+          { "d": "131" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Pattern: 2ⁿ⁺¹ - 1 (3, 7, 15, 31, 63, 127)"
+      },
+      {
+        "id": 4,
+        "section": "Logical Reasoning",
+        "category": "Number Series",
+        "difficulty": "Medium",
+        "question": "What comes next: 2, 3, 5, 8, 12, ?",
+        "options": [
+          { "a": "15" },
+          { "b": "16" },
+          { "c": "17" },
+          { "d": "18" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Pattern: +1, +2, +3, +4, +5"
+      },
+      {
+        "id": 5,
+        "section": "Logical Reasoning",
+        "category": "Number Series",
+        "difficulty": "Medium",
+        "question": "Complete: 1, 1, 2, 6, 24, ?",
+        "options": [
+          { "a": "48" },
+          { "b": "72" },
+          { "c": "96" },
+          { "d": "120" }
+        ],
+        "correct_answer": "d",
+        "explanation": "Factorial series: 1!, 1!, 2!, 3!, 4!, 5!"
+      },
+      {
+        "id": 6,
+        "section": "Logical Reasoning",
+        "category": "Logical Puzzles",
+        "difficulty": "Easy",
+        "question": "If COMPUTER is coded as RFUVQNPC, how is MONITOR coded?",
+        "options": [
+          { "a": "OINROTM" },
+          { "b": "ROTINOM" },
+          { "c": "ZBAVGBE" },
+          { "d": "RQCNMGZ" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Each letter shifted by +8 positions"
+      },
+      {
+        "id": 7,
+        "section": "Logical Reasoning",
+        "category": "Logical Puzzles",
+        "difficulty": "Easy",
+        "question": "In a certain code, if CAT = 24, DOG = 26, what is BIRD?",
+        "options": [
+          { "a": "32" },
+          { "b": "34" },
+          { "c": "36" },
+          { "d": "38" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Sum of ASCII values: C(3)+A(1)+T(20)=24, similarly BIRD=34"
+      },
+      {
+        "id": 8,
+        "section": "Logical Reasoning",
+        "category": "Logical Puzzles",
+        "difficulty": "Easy",
+        "question": "If the day before yesterday was Thursday, what day will it be tomorrow?",
+        "options": [
+          { "a": "Sunday" },
+          { "b": "Monday" },
+          { "c": "Tuesday" },
+          { "d": "Wednesday" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Day before yesterday was Thursday → yesterday was Friday → today is Saturday → tomorrow is Sunday"
+      },
+      {
+        "id": 9,
+        "section": "Logical Reasoning",
+        "category": "Logical Puzzles",
+        "difficulty": "Medium",
+        "question": "A clock shows 3:15. What is the angle between hour and minute hands?",
+        "options": [
+          { "a": "7.5°" },
+          { "b": "15°" },
+          { "c": "22.5°" },
+          { "d": "30°" }
+        ],
+        "correct_answer": "a",
+        "explanation": "At 3:15, angle = |30(3) - 11(15/2)| = |90 - 82.5| = 7.5°"
+      },
+      {
+        "id": 10,
+        "section": "Logical Reasoning",
+        "category": "Logical Puzzles",
+        "difficulty": "Medium",
+        "question": "If A is the father of B, C is the son of B, D is the brother of C, E is the father of D, then how is A related to E?",
+        "options": [
+          { "a": "Father" },
+          { "b": "Son" },
+          { "c": "Same person" },
+          { "d": "Brother" }
+        ],
+        "correct_answer": "c",
+        "explanation": "A=E (both are fathers in the same lineage)"
+      },
+      {
+        "id": 11,
+        "section": "Logical Reasoning",
+        "category": "Data Interpretation",
+        "difficulty": "Easy",
+        "question": "Study the following table: Which month had the highest profit in absolute terms?\n\n| Month | Sales (000s) | Profit % |\n| Jan   | 120          | 15       |\n| Feb   | 150          | 12       |\n| Mar   | 180          | 18       |\n| Apr   | 200          | 20       |",
+        "options": [
+          { "a": "January" },
+          { "b": "February" },
+          { "c": "March" },
+          { "d": "April" }
+        ],
+        "correct_answer": "d",
+        "explanation": "200×20% = 40 thousand (highest absolute profit)"
+      },
+      {
+        "id": 12,
+        "section": "Logical Reasoning",
+        "category": "Data Interpretation",
+        "difficulty": "Easy",
+        "question": "What is the average sales for the four months? (From table in Q11)",
+        "options": [
+          { "a": "162.5" },
+          { "b": "165" },
+          { "c": "167.5" },
+          { "d": "170" }
+        ],
+        "correct_answer": "a",
+        "explanation": "(120+150+180+200)/4 = 650/4 = 162.5"
+      },
+      {
+        "id": 13,
+        "section": "Logical Reasoning",
+        "category": "Data Interpretation",
+        "difficulty": "Medium",
+        "question": "What is the total profit earned in March and April combined (in thousands)? (From table in Q11)",
+        "options": [
+          { "a": "68.4" },
+          { "b": "70.2" },
+          { "c": "72.4" },
+          { "d": "74.6" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Mar: 180×18% + Apr: 200×20% = 32.4 + 40 = 72.4"
+      },
+      {
+        "id": 14,
+        "section": "Logical Reasoning",
+        "category": "Data Interpretation",
+        "difficulty": "Easy",
+        "question": "In a pie chart, if one sector represents 72°, what percentage does it represent?",
+        "options": [
+          { "a": "18%" },
+          { "b": "20%" },
+          { "c": "22%" },
+          { "d": "25%" }
+        ],
+        "correct_answer": "b",
+        "explanation": "72°/360° × 100% = 20%"
+      },
+      {
+        "id": 15,
+        "section": "Logical Reasoning",
+        "category": "Data Interpretation",
+        "difficulty": "Easy",
+        "question": "A bar graph shows that Company A's revenue increased from 100 to 150 million. What is the percentage increase?",
+        "options": [
+          { "a": "40%" },
+          { "b": "45%" },
+          { "c": "50%" },
+          { "d": "55%" }
+        ],
+        "correct_answer": "c",
+        "explanation": "(150-100)/100 × 100% = 50%"
+      },
+      {
+        "id": 16,
+        "section": "Logical Reasoning",
+        "category": "Pattern Recognition",
+        "difficulty": "Medium",
+        "question": "Which number is the odd one out: 2, 5, 10, 17, 26, 37?",
+        "options": [
+          { "a": "2" },
+          { "b": "5" },
+          { "c": "10" },
+          { "d": "26" }
+        ],
+        "correct_answer": "d",
+        "explanation": "Others follow pattern n²+1, but 26 doesn't"
+      },
+      {
+        "id": 17,
+        "section": "Logical Reasoning",
+        "category": "Pattern Recognition",
+        "difficulty": "Easy",
+        "question": "Complete the pattern: A1B2C3D4E5F?",
+        "options": [
+          { "a": "5" },
+          { "b": "6" },
+          { "c": "7" },
+          { "d": "8" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Pattern: letter + number sequence"
+      },
+      {
+        "id": 18,
+        "section": "Logical Reasoning",
+        "category": "Pattern Recognition",
+        "difficulty": "Medium",
+        "question": "If all roses are flowers and some flowers are red, which conclusion is correct?",
+        "options": [
+          { "a": "All roses are red" },
+          { "b": "Some roses may be red" },
+          { "c": "No roses are red" },
+          { "d": "All red things are roses" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Valid logical conclusion"
+      },
+      {
+        "id": 19,
+        "section": "Logical Reasoning",
+        "category": "Pattern Recognition",
+        "difficulty": "Easy",
+        "question": "Find the odd one: Triangle, Square, Circle, Rectangle",
+        "options": [
+          { "a": "Triangle" },
+          { "b": "Square" },
+          { "c": "Circle" },
+          { "d": "Rectangle" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Only shape without straight sides"
+      },
+      {
+        "id": 20,
+        "section": "Logical Reasoning",
+        "category": "Pattern Recognition",
+        "difficulty": "Medium",
+        "question": "In the sequence: 1, 4, 2, 8, 3, 12, 4, ?, what comes next?",
+        "options": [
+          { "a": "12" },
+          { "b": "14" },
+          { "c": "16" },
+          { "d": "18" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Alternating pattern: n, 4n, n+1, 4(n+1), etc."
+      },
+      {
+        "id": 21,
+        "section": "Basic Programming",
+        "category": "Programming Fundamentals",
+        "difficulty": "Easy",
+        "question": "What is the output of the following pseudocode?\n\nx = 5\nif (x > 3 AND x < 10):\n    print \"True\"\nelse:\n    print \"False\"",
+        "options": [
+          { "a": "True" },
+          { "b": "False" },
+          { "c": "Error" },
+          { "d": "No output" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Both conditions (5>3 and 5<10) are satisfied"
+      },
+      {
+        "id": 22,
+        "section": "Basic Programming",
+        "category": "Programming Fundamentals",
+        "difficulty": "Easy",
+        "question": "Which data type would be most appropriate to store a person's age?",
+        "options": [
+          { "a": "String" },
+          { "b": "Float" },
+          { "c": "Integer" },
+          { "d": "Boolean" }
+        ],
+        "correct_answer": "c",
+        "explanation": "Age is typically a whole number"
+      },
+      {
+        "id": 23,
+        "section": "Basic Programming",
+        "category": "Programming Fundamentals",
+        "difficulty": "Easy",
+        "question": "What does the modulus operator (%) return?",
+        "options": [
+          { "a": "Quotient" },
+          { "b": "Remainder" },
+          { "c": "Sum" },
+          { "d": "Difference" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Modulus returns remainder of division"
+      },
+      {
+        "id": 24,
+        "section": "Basic Programming",
+        "category": "Programming Fundamentals",
+        "difficulty": "Easy",
+        "question": "In most programming languages, array indexing starts from:",
+        "options": [
+          { "a": "-1" },
+          { "b": "0" },
+          { "c": "1" },
+          { "d": "Depends on language" }
+        ],
+        "correct_answer": "b",
+        "explanation": "Most languages use 0-based indexing"
+      },
+      {
+        "id": 25,
+        "section": "Basic Programming",
+        "category": "Programming Fundamentals",
+        "difficulty": "Easy",
+        "question": "What is the time complexity of accessing an element in an array by index?",
+        "options": [
+          { "a": "O(1)" },
+          { "b": "O(n)" },
+          { "c": "O(log n)" },
+          { "d": "O(n²)" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Direct access by index"
+      },
+      {
+        "id": 26,
+        "section": "Basic Programming",
+        "category": "Code Analysis",
+        "difficulty": "Easy",
+        "question": "What will be the output of this pseudocode?\n\ni = 0\nwhile (i < 3):\n    print i\n    i = i + 1",
+        "options": [
+          { "a": "0 1 2" },
+          { "b": "1 2 3" },
+          { "c": "0 1 2 3" },
+          { "d": "Infinite loop" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Loop runs 3 times printing i values 0, 1, 2"
+      },
+      {
+        "id": 27,
+        "section": "Basic Programming",
+        "category": "Code Analysis",
+        "difficulty": "Medium",
+        "question": "Which sorting algorithm has the best average-case time complexity?",
+        "options": [
+          { "a": "Bubble Sort" },
+          { "b": "Selection Sort" },
+          { "c": "Merge Sort" },
+          { "d": "Insertion Sort" }
+        ],
+        "correct_answer": "c",
+        "explanation": "O(n log n) average case"
+      },
+      {
+        "id": 28,
+        "section": "Basic Programming",
+        "category": "Code Analysis",
+        "difficulty": "Easy",
+        "question": "What is the output of this pseudocode?\n\narray arr = [1, 2, 3, 4, 5]\nprint arr[2]",
+        "options": [
+          { "a": "1" },
+          { "b": "2" },
+          { "c": "3" },
+          { "d": "4" }
+        ],
+        "correct_answer": "c",
+        "explanation": "arr[2] accesses third element (0-indexed)"
+      },
+      {
+        "id": 29,
+        "section": "Basic Programming",
+        "category": "Code Analysis",
+        "difficulty": "Easy",
+        "question": "Which of the following is NOT a programming paradigm?",
+        "options": [
+          { "a": "Object-Oriented" },
+          { "b": "Functional" },
+          { "c": "Procedural" },
+          { "d": "Conditional" }
+        ],
+        "correct_answer": "d",
+        "explanation": "Not a programming paradigm"
+      },
+      {
+        "id": 30,
+        "section": "Basic Programming",
+        "category": "Code Analysis",
+        "difficulty": "Easy",
+        "question": "Which of the following best describes a function in programming?",
+        "options": [
+          { "a": "A block of code that performs a specific task" },
+          { "b": "A variable that stores multiple values" },
+          { "c": "A type of loop structure" },
+          { "d": "A conditional statement" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Definition of a function"
+      },
+      {
+        "id": 31,
+        "section": "Basic Programming",
+        "category": "Algorithms & Logic",
+        "difficulty": "Medium",
+        "question": "To find the maximum element in an unsorted array of n elements, what is the minimum number of comparisons needed?",
+        "options": [
+          { "a": "n-1" },
+          { "b": "n" },
+          { "c": "n+1" },
+          { "d": "2n" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Need n-1 comparisons to find maximum"
+      },
+      {
+        "id": 32,
+        "section": "Basic Programming",
+        "category": "Algorithms & Logic",
+        "difficulty": "Medium",
+        "question": "What is the binary representation of decimal 13?",
+        "options": [
+          { "a": "1011" },
+          { "b": "1101" },
+          { "c": "1110" },
+          { "d": "1001" }
+        ],
+        "correct_answer": "b",
+        "explanation": "13 in binary is 1101"
+      },
+      {
+        "id": 33,
+        "section": "Basic Programming",
+        "category": "Algorithms & Logic",
+        "difficulty": "Medium",
+        "question": "In a binary search tree, what is true about the left child of any node?",
+        "options": [
+          { "a": "It's always smaller than the parent" },
+          { "b": "It's always larger than the parent" },
+          { "c": "It's equal to the parent" },
+          { "d": "No specific relationship" }
+        ],
+        "correct_answer": "a",
+        "explanation": "BST property"
+      },
+      {
+        "id": 34,
+        "section": "Basic Programming",
+        "category": "Algorithms & Logic",
+        "difficulty": "Medium",
+        "question": "What is the output of this pseudocode?\n\nfunction mystery(n):\n    if (n <= 1):\n        return 1\n    else:\n        return n * mystery(n-1)\n\nprint mystery(4)",
+        "options": [
+          { "a": "10" },
+          { "b": "16" },
+          { "c": "20" },
+          { "d": "24" }
+        ],
+        "correct_answer": "d",
+        "explanation": "Factorial function: 4! = 24"
+      },
+      {
+        "id": 35,
+        "section": "Basic Programming",
+        "category": "Algorithms & Logic",
+        "difficulty": "Easy",
+        "question": "Which data structure follows LIFO (Last In First Out) principle?",
+        "options": [
+          { "a": "Queue" },
+          { "b": "Stack" },
+          { "c": "Array" },
+          { "d": "Linked List" }
+        ],
+        "correct_answer": "b",
+        "explanation": "LIFO data structure"
+      },
+      {
+        "id": 36,
+        "section": "Basic Programming",
+        "category": "Problem Solving",
+        "difficulty": "Easy",
+        "question": "How many times will \"Hello\" be printed in this pseudocode?\n\nfor i = 0 to 1:\n    for j = 0 to 2:\n        print \"Hello\"",
+        "options": [
+          { "a": "2" },
+          { "b": "3" },
+          { "c": "5" },
+          { "d": "6" }
+        ],
+        "correct_answer": "d",
+        "explanation": "Nested loops: 2×3 = 6 iterations (i: 0,1 and j: 0,1,2 for each i)"
+      },
+      {
+        "id": 37,
+        "section": "Basic Programming",
+        "category": "Problem Solving",
+        "difficulty": "Medium",
+        "question": "What is the space complexity of the following algorithm to find if a number is prime?\n\nfor i from 2 to sqrt(n):\n    if n % i == 0:\n        return false\nreturn true",
+        "options": [
+          { "a": "O(1)" },
+          { "b": "O(n)" },
+          { "c": "O(√n)" },
+          { "d": "O(log n)" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Constant space usage"
+      },
+      {
+        "id": 38,
+        "section": "Basic Programming",
+        "category": "Problem Solving",
+        "difficulty": "Easy",
+        "question": "In a linked list, what is the time complexity to insert an element at the beginning?",
+        "options": [
+          { "a": "O(1)" },
+          { "b": "O(n)" },
+          { "c": "O(log n)" },
+          { "d": "O(n log n)" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Insert at beginning takes constant time"
+      },
+      {
+        "id": 39,
+        "section": "Basic Programming",
+        "category": "Problem Solving",
+        "difficulty": "Medium",
+        "question": "What will be stored in variable 'result' after this pseudocode executes?\n\narray numbers = [1, 2, 3, 4, 5]\nresult = 0\nfor each num in numbers:\n    if (num MOD 2 == 0):\n        result = result + num",
+        "options": [
+          { "a": "6" },
+          { "b": "9" },
+          { "c": "12" },
+          { "d": "15" }
+        ],
+        "correct_answer": "a",
+        "explanation": "Sum of even numbers: 2+4 = 6"
+      },
+      {
+        "id": 40,
+        "section": "Basic Programming",
+        "category": "Problem Solving",
+        "difficulty": "Easy",
+        "question": "In pseudocode, which of the following represents a correct loop structure?",
+        "options": [
+          { "a": "for (condition): do something" },
+          { "b": "while (condition): do something" },
+          { "c": "repeat: do something until (condition)" },
+          { "d": "All of the above" }
+        ],
+        "correct_answer": "d",
+        "explanation": "All are valid loop structures in pseudocode"
+      }
+    ],
+    "answer_key": {
+      "1": "b", "2": "a", "3": "b", "4": "c", "5": "d",
+      "6": "c", "7": "b", "8": "a", "9": "a", "10": "c",
+      "11": "d", "12": "a", "13": "c", "14": "b", "15": "c",
+      "16": "d", "17": "b", "18": "b", "19": "c", "20": "c",
+      "21": "a", "22": "c", "23": "b", "24": "b", "25": "a",
+      "26": "a", "27": "c", "28": "c", "29": "d", "30": "a",
+      "31": "a", "32": "b", "33": "a", "34": "d", "35": "b",
+      "36": "d", "37": "a", "38": "a", "39": "a", "40": "d"
+    },
+    "difficulty_distribution": {
+      "easy": 24,
+      "medium": 16,
+      "total": 40
+    },
+    "category_distribution": {
+      "Number Series": 5,
+      "Logical Puzzles": 5,
+      "Data Interpretation": 5,
+      "Pattern Recognition": 5,
+      "Programming Fundamentals": 5,
+      "Code Analysis": 5,
+      "Algorithms & Logic": 5,
+      "Problem Solving": 5
+    }
+  }

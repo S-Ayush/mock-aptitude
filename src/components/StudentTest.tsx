@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Clock, User, LogOut, CheckCircle, AlertTriangle, Send, BookOpen, Target, Award } from 'lucide-react'
+import { Clock, User, LogOut, CheckCircle, AlertTriangle, Send, BookOpen, Target, Award, Brain, Code, BarChart3, Zap } from 'lucide-react'
 import { supabase, Student, Test, Question } from '../lib/supabase'
+import Prism from 'prismjs'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-python'
+import 'prismjs/themes/prism-tomorrow.css'
 
 interface StudentTestProps {
   student: Student
@@ -26,6 +30,24 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
     incorrect: number
     unattempted: number
   } | null>(null)
+  const [currentSection, setCurrentSection] = useState<string>('')
+
+  // Static test metadata
+  const testMetadata = {
+    title: "Mock Placement Drive - Aptitude Round",
+    duration_minutes: 60,
+    total_questions: 40,
+    marking_scheme: {
+      correct_answer: 1,
+      incorrect_answer: -0.25,
+      unanswered: 0
+    },
+    passing_criteria: "50% (20/40 questions)",
+    sections: [
+      { section_name: "Logical Reasoning", question_range: "1-20" },
+      { section_name: "Basic Programming Concepts", question_range: "21-40" }
+    ]
+  }
 
   const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/test-management`
   const apiHeaders = {
@@ -61,13 +83,14 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
       }
 
       setCurrentTest(tests)
+      setTimeLeft(tests.duration_minutes * 60)
 
-      // Load exactly 40 questions
+      // Load questions ordered by question_order
       const { data: questionsData, error: questionsError } = await supabase
         .from('questions')
         .select('*')
         .eq('test_id', tests.id)
-        .limit(40)
+        .order('question_order', { ascending: true })
 
       if (questionsError) {
         setError('Failed to load test questions.')
@@ -271,6 +294,155 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
     return answers[questionId] ? 'answered' : 'unanswered'
   }
 
+  const getSectionIcon = (section: string) => {
+    switch (section) {
+      case 'Logical Reasoning':
+        return <Brain className="w-5 h-5" />
+      case 'Basic Programming':
+        return <Code className="w-5 h-5" />
+      default:
+        return <BookOpen className="w-5 h-5" />
+    }
+  }
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Easy':
+        return 'text-green-600 bg-green-100'
+      case 'Medium':
+        return 'text-yellow-600 bg-yellow-100'
+      case 'Hard':
+        return 'text-red-600 bg-red-100'
+      default:
+        return 'text-gray-600 bg-gray-100'
+    }
+  }
+
+  // Update current section when question changes
+  useEffect(() => {
+    if (questions[currentQuestionIndex]) {
+      setCurrentSection(questions[currentQuestionIndex].section || '')
+    }
+  }, [currentQuestionIndex, questions])
+
+  // Function to format question text with Prism.js syntax highlighting
+  const formatQuestionText = (text: string) => {
+    if (!text) return null
+    
+    const lines = text.split('\n')
+    let result: JSX.Element[] = []
+    let codeLines: string[] = []
+    let inCodeBlock = false
+    
+    lines.forEach((line, index) => {
+      const trimmedLine = line.trim()
+      
+      // Only start code block if we see specific code indicators
+      if (trimmedLine.toLowerCase().includes('pseudocode') || 
+          trimmedLine.toLowerCase().includes('algorithm') ||
+          trimmedLine.toLowerCase().includes('program') ||
+          trimmedLine.toLowerCase().includes('output of') ||
+          trimmedLine.toLowerCase().includes('what will be the output')) {
+        
+        // Close any existing code block first
+        if (codeLines.length > 0) {
+          const codeBlock = codeLines.join('\n')
+          const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
+          result.push(
+            <div key={`code-${index}`} className="my-4">
+              <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
+                💻 Code
+              </div>
+              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
+                <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+              </pre>
+            </div>
+          )
+          codeLines = []
+        }
+        
+        inCodeBlock = true
+        return
+      }
+      
+      // Check if this is a code line (more restrictive)
+      const isCodeLine = 
+        (trimmedLine.startsWith('x =') && trimmedLine.length < 20) || 
+        (trimmedLine.startsWith('if (') && trimmedLine.includes(')')) || 
+        (trimmedLine.startsWith('while (') && trimmedLine.includes(')')) || 
+        (trimmedLine.startsWith('for ') && trimmedLine.includes('to')) ||
+        (trimmedLine.startsWith('array ') && trimmedLine.includes('=')) ||
+        (trimmedLine.startsWith('function ') && trimmedLine.includes('(')) ||
+        (trimmedLine.startsWith('print ') && trimmedLine.includes('"')) ||
+        (trimmedLine.startsWith('return ') && trimmedLine.length < 30) ||
+        (trimmedLine.startsWith('else:') && trimmedLine.length < 10) ||
+        (trimmedLine.startsWith('}') && trimmedLine.length < 5) ||
+        (trimmedLine.startsWith('{') && trimmedLine.length < 5) ||
+        (trimmedLine.startsWith('result') && trimmedLine.includes('=')) ||
+        (trimmedLine.startsWith('i =') && trimmedLine.length < 15) ||
+        (trimmedLine.startsWith('j =') && trimmedLine.length < 15) ||
+        (trimmedLine.startsWith('n =') && trimmedLine.length < 15) ||
+        (trimmedLine.startsWith('num') && trimmedLine.includes('=')) ||
+        (trimmedLine.startsWith('for i') && trimmedLine.includes('to')) ||
+        (trimmedLine.startsWith('for j') && trimmedLine.includes('to')) ||
+        (trimmedLine.startsWith('for each') && trimmedLine.includes('in')) ||
+        (trimmedLine.startsWith('do ') && trimmedLine.length < 10) ||
+        (trimmedLine.startsWith('end') && trimmedLine.length < 10) ||
+        (trimmedLine.startsWith('begin') && trimmedLine.length < 10) ||
+        (trimmedLine.includes('MOD') && trimmedLine.includes('==')) ||
+        (trimmedLine.includes('AND') && trimmedLine.includes('(')) ||
+        (trimmedLine.includes('OR') && trimmedLine.includes('(')) ||
+        (trimmedLine.length > 0 && (trimmedLine.startsWith('    ') || trimmedLine.startsWith('\t')))
+      
+      if (inCodeBlock && isCodeLine) {
+        codeLines.push(line)
+      } else if (inCodeBlock && !isCodeLine && trimmedLine === '') {
+        // Empty line in code block, continue
+        codeLines.push(line)
+      } else if (inCodeBlock && !isCodeLine && trimmedLine !== '') {
+        // End of code block
+        if (codeLines.length > 0) {
+          const codeBlock = codeLines.join('\n')
+          const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
+          result.push(
+            <div key={`code-${index}`} className="my-4">
+              <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
+                💻 Code
+              </div>
+              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
+                <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+              </pre>
+            </div>
+          )
+          codeLines = []
+        }
+        inCodeBlock = false
+        result.push(<div key={index} className="mb-2">{line}</div>)
+      } else {
+        // Always show the question text
+        result.push(<div key={index} className="mb-2">{line}</div>)
+      }
+    })
+    
+    // Handle any remaining code block
+    if (inCodeBlock && codeLines.length > 0) {
+      const codeBlock = codeLines.join('\n')
+      const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
+      result.push(
+        <div key="code-final" className="my-4">
+          <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
+            💻 Code
+          </div>
+          <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
+            <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+          </pre>
+        </div>
+      )
+    }
+    
+    return result
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -385,26 +557,43 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white text-center">
                 <BookOpen className="w-16 h-16 mx-auto mb-4" />
-                <h1 className="text-3xl font-bold mb-2">{currentTest?.title}</h1>
+                <h1 className="text-3xl font-bold mb-2">{testMetadata?.title || currentTest?.title}</h1>
                 <p className="text-blue-100 text-lg">Online Examination System</p>
+                {testMetadata?.sections && (
+                  <div className="mt-4 flex justify-center space-x-4">
+                    {testMetadata.sections.map((section, index) => (
+                      <div key={index} className="flex items-center space-x-2 bg-white/20 px-3 py-1 rounded-full">
+                        {getSectionIcon(section.section_name)}
+                        <span className="text-sm font-medium">{section.section_name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center">
                     <BookOpen className="w-12 h-12 text-blue-600 mx-auto mb-3" />
                     <p className="text-sm text-blue-600 font-semibold uppercase tracking-wide">Questions</p>
-                    <p className="text-3xl font-bold text-blue-900">40</p>
+                    <p className="text-3xl font-bold text-blue-900">{testMetadata?.total_questions || currentTest?.total_questions || 40}</p>
                   </div>
                   <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center">
                     <Clock className="w-12 h-12 text-green-600 mx-auto mb-3" />
                     <p className="text-sm text-green-600 font-semibold uppercase tracking-wide">Duration</p>
-                    <p className="text-3xl font-bold text-green-900">60 min</p>
+                    <p className="text-3xl font-bold text-green-900">{testMetadata?.duration_minutes || currentTest?.duration_minutes || 60} min</p>
                   </div>
                   <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center">
                     <Target className="w-12 h-12 text-purple-600 mx-auto mb-3" />
                     <p className="text-sm text-purple-600 font-semibold uppercase tracking-wide">Scoring</p>
-                    <p className="text-lg font-bold text-purple-900">+1 / -0.25</p>
+                    <p className="text-lg font-bold text-purple-900">
+                      +{testMetadata?.marking_scheme?.correct_answer || 1} / {testMetadata?.marking_scheme?.incorrect_answer || -0.25}
+                    </p>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center">
+                    <BarChart3 className="w-12 h-12 text-orange-600 mx-auto mb-3" />
+                    <p className="text-sm text-orange-600 font-semibold uppercase tracking-wide">Passing</p>
+                    <p className="text-lg font-bold text-orange-900">{testMetadata?.passing_criteria || '50%'}</p>
                   </div>
                 </div>
 
@@ -522,27 +711,46 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
                 <p className="text-xs text-gray-600 mt-1">{progress.toFixed(0)}% Complete</p>
               </div>
 
-              <div className="grid grid-cols-5 gap-2">
-                {questions.map((_, index) => {
-                  const isAnswered = answers[questions[index]?.id]
-                  const isCurrent = index === currentQuestionIndex
-                  
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentQuestionIndex(index)}
-                      className={`aspect-square rounded-lg text-sm font-semibold transition-all transform hover:scale-105 ${
-                        isCurrent
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                          : isAnswered
-                          ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  )
-                })}
+              <div className="space-y-4">
+                {/* Show all questions in a simple grid */}
+                <div className="grid grid-cols-5 gap-2">
+                  {questions.map((question, index) => {
+                    const isAnswered = answers[question?.id]
+                    const isCurrent = index === currentQuestionIndex
+                    
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentQuestionIndex(index)}
+                        className={`aspect-square rounded-lg text-sm font-semibold transition-all transform hover:scale-105 ${
+                          isCurrent
+                            ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                            : isAnswered
+                            ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                        title={`Question ${index + 1}${question?.section ? ` - ${question.section}` : ''}${question?.difficulty ? ` (${question.difficulty})` : ''}`}
+                      >
+                        {index + 1}
+                      </button>
+                    )
+                  })}
+                </div>
+                
+                {/* Section breakdown for reference */}
+                {testMetadata?.sections && (
+                  <div className="mt-4 space-y-2">
+                    <p className="text-xs font-medium text-gray-600">Section Breakdown:</p>
+                    {testMetadata.sections.map((section, index) => {
+                      return (
+                        <div key={index} className="flex items-center space-x-2 text-xs text-gray-500">
+                          {getSectionIcon(section.section_name)}
+                          <span>{section.section_name}: 20 questions</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
 
               <div className="mt-6 space-y-2 text-sm">
@@ -568,10 +776,27 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
-                      Question {currentQuestionIndex + 1}
-                    </h2>
-                    <p className="text-gray-600 mt-1">Choose the correct answer</p>
+                    <div className="flex items-center space-x-4 mb-2">
+                      <h2 className="text-2xl font-bold text-gray-900">
+                        Question {currentQuestionIndex + 1}
+                      </h2>
+                      {currentQuestion?.section && (
+                        <div className="flex items-center space-x-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                          {getSectionIcon(currentQuestion.section)}
+                          <span>{currentQuestion.section}</span>
+                        </div>
+                      )}
+                      {currentQuestion?.difficulty && (
+                        <div className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(currentQuestion.difficulty)}`}>
+                          <Zap className="w-4 h-4 inline mr-1" />
+                          {currentQuestion.difficulty}
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-gray-600">Choose the correct answer</p>
+                    {currentQuestion?.category && (
+                      <p className="text-sm text-gray-500 mt-1">Category: {currentQuestion.category}</p>
+                    )}
                   </div>
                   <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
                     getQuestionStatus(currentQuestion?.id) === 'answered'
@@ -583,9 +808,13 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
                 </div>
                 
                 <div className="bg-gray-50 rounded-xl p-6 mb-6">
-                  <p className="text-lg text-gray-800 leading-relaxed font-medium">
-                    {currentQuestion?.question_text}
-                  </p>
+                  <div className="text-lg text-gray-800 leading-relaxed font-medium">
+                    {currentQuestion?.question_text && (
+                      <div className="space-y-2">
+                        {formatQuestionText(currentQuestion.question_text)}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
