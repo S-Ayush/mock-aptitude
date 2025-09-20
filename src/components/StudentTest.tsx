@@ -321,116 +321,15 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
     }
   }, [currentQuestionIndex, questions])
 
-  // Function to format question text with simple code highlighting
+  // Simple function to display question text normally
   const formatQuestionText = (text: string) => {
     if (!text) return null
     
-    const lines = text.split('\n')
-    let result: JSX.Element[] = []
-    let codeLines: string[] = []
-    let inCodeBlock = false
-    
-    lines.forEach((line, index) => {
-      const trimmedLine = line.trim()
-      
-      // Only start code block if we see specific code indicators
-      if (trimmedLine.toLowerCase().includes('pseudocode') || 
-          trimmedLine.toLowerCase().includes('algorithm') ||
-          trimmedLine.toLowerCase().includes('program') ||
-          trimmedLine.toLowerCase().includes('output of') ||
-          trimmedLine.toLowerCase().includes('what will be the output')) {
-        
-        // Close any existing code block first
-        if (codeLines.length > 0) {
-          result.push(
-            <div key={`code-${index}`} className="my-4">
-              <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
-                💻 Code
-              </div>
-              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
-                <code>{codeLines.join('\n')}</code>
-              </pre>
-            </div>
-          )
-          codeLines = []
-        }
-        
-        inCodeBlock = true
-        return
-      }
-      
-      // Check if this is a code line (more restrictive)
-      const isCodeLine = 
-        (trimmedLine.startsWith('x =') && trimmedLine.length < 20) || 
-        (trimmedLine.startsWith('if (') && trimmedLine.includes(')')) || 
-        (trimmedLine.startsWith('while (') && trimmedLine.includes(')')) || 
-        (trimmedLine.startsWith('for ') && trimmedLine.includes('to')) ||
-        (trimmedLine.startsWith('array ') && trimmedLine.includes('=')) ||
-        (trimmedLine.startsWith('function ') && trimmedLine.includes('(')) ||
-        (trimmedLine.startsWith('print ') && trimmedLine.includes('"')) ||
-        (trimmedLine.startsWith('return ') && trimmedLine.length < 30) ||
-        (trimmedLine.startsWith('else:') && trimmedLine.length < 10) ||
-        (trimmedLine.startsWith('}') && trimmedLine.length < 5) ||
-        (trimmedLine.startsWith('{') && trimmedLine.length < 5) ||
-        (trimmedLine.startsWith('result') && trimmedLine.includes('=')) ||
-        (trimmedLine.startsWith('i =') && trimmedLine.length < 15) ||
-        (trimmedLine.startsWith('j =') && trimmedLine.length < 15) ||
-        (trimmedLine.startsWith('n =') && trimmedLine.length < 15) ||
-        (trimmedLine.startsWith('num') && trimmedLine.includes('=')) ||
-        (trimmedLine.startsWith('for i') && trimmedLine.includes('to')) ||
-        (trimmedLine.startsWith('for j') && trimmedLine.includes('to')) ||
-        (trimmedLine.startsWith('for each') && trimmedLine.includes('in')) ||
-        (trimmedLine.startsWith('do ') && trimmedLine.length < 10) ||
-        (trimmedLine.startsWith('end') && trimmedLine.length < 10) ||
-        (trimmedLine.startsWith('begin') && trimmedLine.length < 10) ||
-        (trimmedLine.includes('MOD') && trimmedLine.includes('==')) ||
-        (trimmedLine.includes('AND') && trimmedLine.includes('(')) ||
-        (trimmedLine.includes('OR') && trimmedLine.includes('(')) ||
-        (trimmedLine.length > 0 && (trimmedLine.startsWith('    ') || trimmedLine.startsWith('\t')))
-      
-      if (inCodeBlock && isCodeLine) {
-        codeLines.push(line)
-      } else if (inCodeBlock && !isCodeLine && trimmedLine === '') {
-        // Empty line in code block, continue
-        codeLines.push(line)
-      } else if (inCodeBlock && !isCodeLine && trimmedLine !== '') {
-        // End of code block
-        if (codeLines.length > 0) {
-          result.push(
-            <div key={`code-${index}`} className="my-4">
-              <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
-                💻 Code
-              </div>
-              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
-                <code>{codeLines.join('\n')}</code>
-              </pre>
-            </div>
-          )
-          codeLines = []
-        }
-        inCodeBlock = false
-        result.push(<div key={index} className="mb-2">{line}</div>)
-      } else {
-        // Always show the question text
-        result.push(<div key={index} className="mb-2">{line}</div>)
-      }
-    })
-    
-    // Handle any remaining code block
-    if (inCodeBlock && codeLines.length > 0) {
-      result.push(
-        <div key="code-final" className="my-4">
-          <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
-            💻 Code
-          </div>
-          <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
-            <code>{codeLines.join('\n')}</code>
-          </pre>
-        </div>
-      )
-    }
-    
-    return result
+    return (
+      <div className="whitespace-pre-wrap text-gray-800 leading-relaxed">
+        {text}
+      </div>
+    )
   }
 
   if (loading) {
