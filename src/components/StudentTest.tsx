@@ -4,7 +4,6 @@ import { supabase, Student, Test, Question } from '../lib/supabase'
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-python'
-import 'prismjs/themes/prism-tomorrow.css'
 
 interface StudentTestProps {
   student: Student
