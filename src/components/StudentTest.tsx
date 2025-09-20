@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Clock, User, LogOut, CheckCircle, AlertTriangle, Send, BookOpen, Target, Award, Brain, Code, BarChart3, Zap } from 'lucide-react'
 import { supabase, Student, Test, Question } from '../lib/supabase'
-import Prism from 'prismjs'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/components/prism-python'
 
 interface StudentTestProps {
   student: Student
@@ -324,7 +321,7 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
     }
   }, [currentQuestionIndex, questions])
 
-  // Function to format question text with Prism.js syntax highlighting
+  // Function to format question text with simple code highlighting
   const formatQuestionText = (text: string) => {
     if (!text) return null
     
@@ -345,15 +342,13 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
         
         // Close any existing code block first
         if (codeLines.length > 0) {
-          const codeBlock = codeLines.join('\n')
-          const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
           result.push(
             <div key={`code-${index}`} className="my-4">
               <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
                 💻 Code
               </div>
-              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
-                <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
+                <code>{codeLines.join('\n')}</code>
               </pre>
             </div>
           )
@@ -401,15 +396,13 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
       } else if (inCodeBlock && !isCodeLine && trimmedLine !== '') {
         // End of code block
         if (codeLines.length > 0) {
-          const codeBlock = codeLines.join('\n')
-          const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
           result.push(
             <div key={`code-${index}`} className="my-4">
               <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
                 💻 Code
               </div>
-              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
-                <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+              <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
+                <code>{codeLines.join('\n')}</code>
               </pre>
             </div>
           )
@@ -425,15 +418,13 @@ export default function StudentTest({ student, onLogout }: StudentTestProps) {
     
     // Handle any remaining code block
     if (inCodeBlock && codeLines.length > 0) {
-      const codeBlock = codeLines.join('\n')
-      const highlightedCode = Prism.highlight(codeBlock, Prism.languages.javascript, 'javascript')
       result.push(
         <div key="code-final" className="my-4">
           <div className="bg-blue-600 text-white px-3 py-1 rounded-t-lg text-sm font-semibold">
             💻 Code
           </div>
-          <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto">
-            <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+          <pre className="bg-gray-50 border border-gray-200 text-gray-800 p-4 rounded-b-lg overflow-x-auto font-mono text-sm">
+            <code>{codeLines.join('\n')}</code>
           </pre>
         </div>
       )
